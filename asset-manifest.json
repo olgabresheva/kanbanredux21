@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/kanbanredux21/static/css/main.fc772dfe.chunk.css",
+    "main.js": "/kanbanredux21/static/js/main.c76ba082.chunk.js",
+    "main.js.map": "/kanbanredux21/static/js/main.c76ba082.chunk.js.map",
+    "runtime-main.js": "/kanbanredux21/static/js/runtime-main.4a1a8716.js",
+    "runtime-main.js.map": "/kanbanredux21/static/js/runtime-main.4a1a8716.js.map",
+    "static/css/2.11829350.chunk.css": "/kanbanredux21/static/css/2.11829350.chunk.css",
+    "static/js/2.414c06c8.chunk.js": "/kanbanredux21/static/js/2.414c06c8.chunk.js",
+    "static/js/2.414c06c8.chunk.js.map": "/kanbanredux21/static/js/2.414c06c8.chunk.js.map",
+    "index.html": "/kanbanredux21/index.html",
+    "precache-manifest.24517b0c9381ee7d35d4ef117a9baac9.js": "/kanbanredux21/precache-manifest.24517b0c9381ee7d35d4ef117a9baac9.js",
+    "service-worker.js": "/kanbanredux21/service-worker.js",
+    "static/css/2.11829350.chunk.css.map": "/kanbanredux21/static/css/2.11829350.chunk.css.map",
+    "static/css/main.fc772dfe.chunk.css.map": "/kanbanredux21/static/css/main.fc772dfe.chunk.css.map",
+    "static/js/2.414c06c8.chunk.js.LICENSE.txt": "/kanbanredux21/static/js/2.414c06c8.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4a1a8716.js",
+    "static/css/2.11829350.chunk.css",
+    "static/js/2.414c06c8.chunk.js",
+    "static/css/main.fc772dfe.chunk.css",
+    "static/js/main.c76ba082.chunk.js"
+  ]
+}

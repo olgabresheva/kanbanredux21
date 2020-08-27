@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getTasks() {
     return (dispatch) => {
         axios({
-            url: 'http://localhost:5000/card',
+            url: 'https://kanban-app-trial.herokuapp.com/card',
             method: 'GET'
         })
             .then(res => {
@@ -20,7 +20,7 @@ export function getTasks() {
 export function onTaskCreate(name, description, priority) {
     return (dispatch) => {
         axios({
-            url: 'http://localhost:5000/card',
+            url: 'https://kanban-app-trial.herokuapp.com/card',
             method: 'POST',
             data: {name, description, priority}
         })
@@ -36,7 +36,7 @@ export function onTaskCreate(name, description, priority) {
 export function taskDelete(id) {
     return (dispatch) => {
         axios({
-            url: `http://localhost:5000/card/${id}`,
+            url: `https://kanban-app-trial.herokuapp.com/card/${id}`,
             method: 'DELETE'
         })
             .then(res => {
@@ -51,7 +51,7 @@ export function taskDelete(id) {
 export function taskEdit(id, newName, newDescription) {
     return (dispatch) => {
         axios({
-            url: `http://localhost:5000/card/${id}`,
+            url: `https://kanban-app-trial.herokuapp.com/card/${id}`,
             method: 'PATCH',
             data: {name: newName, description: newDescription}
         })
@@ -67,7 +67,7 @@ export function taskEdit(id, newName, newDescription) {
 export function taskPriorityChg(id, priority) {
     return (dispatch) => {
         axios({
-            url: `http://localhost:5000/card/${id}`,
+            url: `https://kanban-app-trial.herokuapp.com/card/${id}`,
             method: 'PATCH',
             data: {priority: priority}
         })
@@ -83,7 +83,7 @@ export function taskPriorityChg(id, priority) {
 export function taskStateChg(id, state) {
     return (dispatch) => {
         axios({
-            url: `http://localhost:5000/card/${id}`,
+            url: `https://kanban-app-trial.herokuapp.com/card/${id}`,
             method: 'PATCH',
             data: {status: state}
         })

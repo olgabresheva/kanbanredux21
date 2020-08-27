@@ -5,7 +5,9 @@ import {getTasks, onTaskCreate} from '../redux/actions';
 
 function TaskCreateForm(props) {
 
-    useEffect(() => {getTasks()}, []);
+    useEffect(() => {
+        getTasks()
+    }, []);
 
     const [taskName, setTaskName] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
@@ -40,44 +42,53 @@ function TaskCreateForm(props) {
     }
 
 
-  return (
-    <div className="TaskCreateForm">
+    return (
+        <div className="TaskCreateForm">
 
-      <button type="submit" className="btn btn-info create" onClick={() => setFormOpen(true)}>Create New Task</button>
-      <p/>
+            <button type="submit" className="btn btn-info create" onClick={() => setFormOpen(true)}>Create New Task
+            </button>
+            <p/>
 
-      {formOpen &&
-      <form>
-        <div className="form-group">
-          <input type="text" className="form-control" placeholder={'Enter Take Name'} value={taskName}
-                 onChange={e => setTaskName(e.target.value)}/>
-            <input type="text" className="form-control" placeholder={'Enter Task Description'} value={taskDescription}
-                   onChange={e => setTaskDescription(e.target.value)}/>
+            {formOpen &&
+            <form>
+                <div className="form-group">
+                    <div className="row">
+                        <div className="col">
+                            <input type="text" className="form-control" placeholder={'Enter Take Name'} value={taskName}
+                                   onChange={e => setTaskName(e.target.value)}/>
+                        </div>
+                        <div className="col">
+                            <input type="text" className="form-control" placeholder={'Enter Task Description'}
+                                   value={taskDescription}
+                                   onChange={e => setTaskDescription(e.target.value)}/>
+                        </div>
+                    </div>
+                    <p/>
+                    <select className="custom-select" onChange={taskPriorityInput} required>
+                        <option value="0">Select Priority</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <p/>
+                    <button disabled={addBtnDisabled} type="submit" className="btn btn-info"
+                            onClick={taskCreate}>Add Task
+                    </button>
+                    <button type="button" className="btn btn-secondary"
+                            onClick={onTaskCreateCancel}>Cancel
+                    </button>
+                </div>
+            </form>
+            }
 
         </div>
-        <select className="custom-select" onChange={taskPriorityInput} required>
-          <option value="0">Select Priority</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-        <p/>
-        <button disabled={addBtnDisabled} type="submit" className="btn btn-info" onClick={taskCreate}>Add Task
-        </button>
-        <button type="button" className="btn btn-secondary"
-                onClick={onTaskCreateCancel}>Cancel
-        </button>
-      </form>
-      }
-
-    </div>
-  );
+    );
 }
 
 const mapDispatchToProps = dispatch => ({
     //onTaskCreate : (newTask, priority) => dispatch ({type: 'TASK_CREATE', payload: {newTask, priority}})
-    getTasks : () => dispatch(getTasks()),
-    onTaskCreate : (taskName, taskDescription, priority) => dispatch(onTaskCreate(taskName, taskDescription, priority))
+    getTasks: () => dispatch(getTasks()),
+    onTaskCreate: (taskName, taskDescription, priority) => dispatch(onTaskCreate(taskName, taskDescription, priority))
 })
 
 export default connect(null, mapDispatchToProps)(TaskCreateForm);

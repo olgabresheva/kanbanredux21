@@ -48,12 +48,12 @@ export function taskDelete(id) {
     }
 }
 
-export function taskEdit(id, newName) {
+export function taskEdit(id, newName, newDescription) {
     return (dispatch) => {
         axios({
             url: `http://localhost:5000/card/${id}`,
             method: 'PATCH',
-            data: {name: newName}
+            data: {name: newName, description: newDescription}
         })
             .then(res => {
                 dispatch(getTasks())
@@ -70,6 +70,22 @@ export function taskPriorityChg(id, priority) {
             url: `http://localhost:5000/card/${id}`,
             method: 'PATCH',
             data: {priority: priority}
+        })
+            .then(res => {
+                dispatch(getTasks())
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+}
+
+export function taskStateChg(id, state) {
+    return (dispatch) => {
+        axios({
+            url: `http://localhost:5000/card/${id}`,
+            method: 'PATCH',
+            data: {status: state}
         })
             .then(res => {
                 dispatch(getTasks())

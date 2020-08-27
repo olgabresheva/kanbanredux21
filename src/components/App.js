@@ -12,6 +12,7 @@ function App(props) {
             <div className="container">
 
                 <h2>Kanban Board</h2>
+                <h6>Please don't delete existing tasks</h6>
                 <TaskCreateForm/>
                 <hr/>
 

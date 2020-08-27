@@ -14,3 +14,16 @@ li {
 .create {
   margin-top: 10px;
 }
+
+.priority {
+  display: inline-block;
+  width: 3rem;
+}
+
+.mytext {
+  width: 400px;
+}
+
+h6 {
+  text-effect: outline;
+}

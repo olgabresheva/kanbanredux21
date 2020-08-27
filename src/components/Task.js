@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import '../App.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import {connect} from 'react-redux';
-import {getTasks} from "../redux/actions";
+import ShowMoreText from 'react-show-more-text';
 
 const deleteBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
@@ -52,18 +51,11 @@ const editBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="bi
           d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z"/>
 </svg>);
 
-const saveBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-check2-all" fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg">
-    <path fillRule="evenodd"
-          d="M12.354 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-    <path
-        d="M6.25 8.043l-.896-.897a.5.5 0 1 0-.708.708l.897.896.707-.707zm1 2.414l.896.897a.5.5 0 0 0 .708 0l7-7a.5.5 0 0 0-.708-.708L8.5 10.293l-.543-.543-.707.707z"/>
-</svg>);
-
 function Task(props) {
 
     const [editMode, setEditMode] = useState(false);
-    const [taskNewName, setTaskNewName] = useState(props.item);
+    const [taskNewName, setTaskNewName] = useState(props.name);
+    const [taskNewDescr, setTaskNewDescr] = useState(props.description);
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
@@ -72,7 +64,7 @@ function Task(props) {
     }
 
     const onTaskSave = () => {
-        props.taskEdit(props.id, taskNewName);
+        props.taskEdit(props.id, taskNewName, taskNewDescr);
         setEditMode(false);
     }
 
@@ -80,6 +72,14 @@ function Task(props) {
         let p;
         direction === 'up' ? p = props.priority - 1 : p = props.priority + 1
         props.taskPriorityChg(id, p)
+    }
+
+    const onStateChg = (id, direction) => {
+        let state;
+        if (direction === 'right') {
+            state = props.boardState[props.boardState.indexOf(props.state) + 1]
+        } else state = props.boardState[props.boardState.indexOf(props.state) - 1]
+        props.taskStateChg(id, state)
     }
 
     const priorityBadge = {
@@ -102,15 +102,12 @@ function Task(props) {
 
                 </div>
                 <div className="card-body">
-                    {editMode
-                        ? <>
-                            <input type="text" value={taskNewName}
-                                   onChange={e => setTaskNewName(e.target.value)}/><br/>
-                            <button type="button" className="btn btn-outline-info btn-sm"
-                                    onClick={onTaskSave}>{saveBtn}</button>
-                        </>
-                        : <h6 className="card-title">{props.item}</h6>
-                    }
+                    <h6 className="card-title">{props.name}:</h6>
+                    <ShowMoreText className="card-title small"
+                                  lines={1}
+                                  more='Show more'
+                                  less='Show less'>
+                        {props.description}</ShowMoreText>
 
                 </div>
                 <div className="card-footer bg-transparent text-muted border-0">
@@ -118,6 +115,26 @@ function Task(props) {
                 <span onClick={() => setEditMode(true)}>{editBtn}</span>
                     <span onClick={() => setShow(true)}>{deleteBtn}</span>
                     </span>
+                    {editMode &&
+                    <>
+                        <Modal show={editMode} onHide={handleClose}>
+                            <Modal.Body>
+                                <p><strong>Task Name:</strong></p>
+                                <input className="mytext" type="text" value={taskNewName}
+                                       onChange={e => setTaskNewName(e.target.value)}/><br/>
+                                <p/>
+                                <p><strong>Task Description:</strong></p>
+                                <input className="mytext" type="text" value={taskNewDescr}
+                                       onChange={e => setTaskNewDescr(e.target.value)}/><br/>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button type="button" className="btn btn-secondary btn-sm"
+                                        onClick={() => setEditMode(false)}>Cancel</Button>
+                                <Button type="button" className="btn btn-primary btn-sm"
+                                        onClick={onTaskSave}>Save</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </>}
                     {show &&
                     <>
                         <Modal show={show} onHide={handleClose}>
@@ -133,9 +150,9 @@ function Task(props) {
                     }
                     <span className="float-right">
                 {(props.state !== 'To Do' && props.state !== 'Done') &&
-                <span onClick={() => props.taskStateChg(props.id, "left")}>{leftBtn}</span>}
+                <span onClick={() => onStateChg(props.id, "left")}>{leftBtn}</span>}
                         {props.state !== 'Done' &&
-                        <span onClick={() => props.taskStateChg(props.id, "right")}>{rightBtn}</span>}
+                        <span onClick={() => onStateChg(props.id, "right")}>{rightBtn}</span>}
                 </span>
                 </div>
             </div>

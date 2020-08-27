@@ -25,9 +25,7 @@ export function onTaskCreate(name, description, priority) {
             data: {name, description, priority}
         })
             .then(res => {
-                dispatch({
-                    type: 'TASK_CREATE', payload: res.data
-                })
+                dispatch(getTasks())
             })
             .catch(function (error) {
                 console.log(error);
@@ -42,13 +40,42 @@ export function taskDelete(id) {
             method: 'DELETE'
         })
             .then(res => {
-                dispatch({
-                    type: 'TASK_DELETE',
-                    payload: res.data
-                })
+                dispatch(getTasks())
             })
             .catch(function (error) {
                 console.log(error);
+            })
+    }
+}
+
+export function taskEdit(id, newName) {
+    return (dispatch) => {
+        axios({
+            url: `http://localhost:5000/card/${id}`,
+            method: 'PATCH',
+            data: {name: newName}
+        })
+            .then(res => {
+                dispatch(getTasks())
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+}
+
+export function taskPriorityChg(id, priority) {
+    return (dispatch) => {
+        axios({
+            url: `http://localhost:5000/card/${id}`,
+            method: 'PATCH',
+            data: {priority: priority}
+        })
+            .then(res => {
+                dispatch(getTasks())
+            })
+            .catch(function (error) {
+                console.log(error)
             })
     }
 }

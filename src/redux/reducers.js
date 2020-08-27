@@ -33,51 +33,11 @@ const task = (state = initialState, action) => {
                 tasks: action.payload
             };
 
-        case 'TASK_STATE_CHG':
-            const tasksAfterStateChg = state.tasks.map(el => {
-                if (el.id === action.payload.id) {
-                    if (action.payload.direction === 'right') {
-                        return ({...el, state: state.boardStatus[state.boardStatus.indexOf(el.state) + 1]})
-                    }
-                    if (action.payload.direction === 'left') {
-                        return ({...el, state: state.boardStatus[state.boardStatus.indexOf(el.state) - 1]})
-                    }
-                } else return el;
-            })
-            return {
-                ...state,
-                tasks: tasksAfterStateChg
-            };
-
-        case 'TASK_PRIORITY_CHG':
-            const tasksAfterPriorityChg = state.tasks.map(el => {
-                if (el.id === action.payload.id) {
-                    if (action.payload.direction === 'up') {
-                        return ({...el, priority: el.priority - 1})
-                    }
-                    if (action.payload.direction === 'down') {
-                        return ({...el, priority: el.priority + 1})
-                    }
-                } else return el;
-            })
-            return {
-                ...state,
-                tasks: tasksAfterPriorityChg
-            };
-
         case 'TASK_EDIT':
-
-            const tasksAfterEdit = state.tasks.map(el => {
-                if (el.id === action.payload.id) {
-                    return ({...el, title: action.payload.newTitle})
-                } else return el;
-            })
-
             return {
                 ...state,
-                tasks: tasksAfterEdit
+                tasks: [...state.tasks, action.payload]
             }
-
 
         default:
             return state;

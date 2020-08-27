@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../App.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import {connect} from 'react-redux';
+import {getTasks} from "../redux/actions";
 
 const deleteBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
@@ -61,8 +63,7 @@ const saveBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="bi
 function Task(props) {
 
     const [editMode, setEditMode] = useState(false);
-    const [taskNewInput, setTaskNewInput] = useState(props.item);
-
+    const [taskNewName, setTaskNewName] = useState(props.item);
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
@@ -71,8 +72,14 @@ function Task(props) {
     }
 
     const onTaskSave = () => {
-        props.taskSave(props.id, taskNewInput);
+        props.taskEdit(props.id, taskNewName);
         setEditMode(false);
+    }
+
+    const onPriorityChg = (id, direction) => {
+        let p;
+        direction === 'up' ? p = props.priority - 1 : p = props.priority + 1
+        props.taskPriorityChg(id, p)
     }
 
     const priorityBadge = {
@@ -87,9 +94,9 @@ function Task(props) {
                 <div className="card-header">
                 <span className="priority">
                     {props.priority < 3 &&
-                    <span onClick={() => props.taskPriorityChg(props.id, "down")}>{downBtn}</span>}
+                    <span onClick={() => onPriorityChg(props.id, 'down')}>{downBtn}</span>}
                     {props.priority > 1 &&
-                    <span onClick={() => props.taskPriorityChg(props.id, "up")}>{upBtn}</span>}
+                    <span onClick={() => onPriorityChg(props.id, 'up')}>{upBtn}</span>}
                 </span>
                     <span className={priorityBadge[props.priority]}>Priority: {props.priority}</span>
 
@@ -97,12 +104,12 @@ function Task(props) {
                 <div className="card-body">
                     {editMode
                         ? <>
-                            <input type="text" value={taskNewInput}
-                                   onChange={e => setTaskNewInput(e.target.value)}/><br/>
+                            <input type="text" value={taskNewName}
+                                   onChange={e => setTaskNewName(e.target.value)}/><br/>
                             <button type="button" className="btn btn-outline-info btn-sm"
                                     onClick={onTaskSave}>{saveBtn}</button>
                         </>
-                        : <h6 className="card-title"> {props.item}</h6>
+                        : <h6 className="card-title">{props.item}</h6>
                     }
 
                 </div>

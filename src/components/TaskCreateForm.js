@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
+import {getTasks, onTaskCreate} from '../redux/actions';
 
 function TaskCreateForm(props) {
 
-    const [newTask, setNewTask] = useState('');
+    useEffect(() => {getTasks()}, []);
+
+    const [taskName, setTaskName] = useState('');
+    const [taskDescription, setTaskDescription] = useState('');
     const [priority, setPriority] = useState('Select Priority');
     const [addBtnDisabled, setAddBtnDisabled] = useState(true);
     const [formOpen, setFormOpen] = useState(false);
@@ -20,14 +24,16 @@ function TaskCreateForm(props) {
 
     const taskCreate = (e) => {
         e.preventDefault();
-        props.onTaskCreate(newTask, priority);
+        props.onTaskCreate(taskName, taskDescription, priority);
         setFormOpen(false);
-        setNewTask('');
+        setTaskName('');
+        setTaskDescription('');
         setAddBtnDisabled(true)
     }
 
     const onTaskCreateCancel = () => {
-        setNewTask('');
+        setTaskName('');
+        setTaskDescription('');
         setPriority('Select Priority');
         setAddBtnDisabled(true);
         setFormOpen(false);
@@ -37,14 +43,17 @@ function TaskCreateForm(props) {
   return (
     <div className="TaskCreateForm">
 
-      <button type="submit" className="btn btn-info" onClick={() => setFormOpen(true)}>Create New Task</button>
+      <button type="submit" className="btn btn-info create" onClick={() => setFormOpen(true)}>Create New Task</button>
       <p/>
 
       {formOpen &&
       <form>
         <div className="form-group">
-          <input type="text" className="form-control" placeholder={'Enter Your Task'} value={newTask}
-                 onChange={e => setNewTask(e.target.value)}/>
+          <input type="text" className="form-control" placeholder={'Enter Take Name'} value={taskName}
+                 onChange={e => setTaskName(e.target.value)}/>
+            <input type="text" className="form-control" placeholder={'Enter Task Description'} value={taskDescription}
+                   onChange={e => setTaskDescription(e.target.value)}/>
+
         </div>
         <select className="custom-select" onChange={taskPriorityInput} required>
           <option value="0">Select Priority</option>
@@ -66,7 +75,9 @@ function TaskCreateForm(props) {
 }
 
 const mapDispatchToProps = dispatch => ({
-    onTaskCreate : (newTask, priority) => dispatch ({type: 'TASK_CREATE', payload: {newTask, priority}})
+    //onTaskCreate : (newTask, priority) => dispatch ({type: 'TASK_CREATE', payload: {newTask, priority}})
+    getTasks : () => dispatch(getTasks()),
+    onTaskCreate : (taskName, taskDescription, priority) => dispatch(onTaskCreate(taskName, taskDescription, priority))
 })
 
 export default connect(null, mapDispatchToProps)(TaskCreateForm);

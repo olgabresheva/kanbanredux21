@@ -2,10 +2,10 @@ import {uuid} from "uuidv4";
 
 const initialState = {
     tasks: [
-        {id: uuid(), title: "Task - 1", priority: 1, state: 'To Do'},
-        {id: uuid(), title: "Task - 2", priority: 2, state: 'In Progress'},
-        {id: uuid(), title: "Task - 3", priority: 3, state: 'Review'},
-        {id: uuid(), title: "Task - 4", priority: 3, state: 'Done'}
+        {_id: uuid(), name: "Task - 1", description: "Description -1", priority: 1, status: 'To Do'},
+        {_id: uuid(), name: "Task - 2", description: "Description -2", priority: 2, status: 'In Progress'},
+        {_id: uuid(), name: "Task - 3", description: "Description -3", priority: 3, status: 'Review'},
+        {_id: uuid(), name: "Task - 4", description: "Description -4", priority: 3, status: 'Done'}
     ],
     boardStatus: ['To Do', 'In Progress', 'Review', 'Done'],
 };
@@ -13,23 +13,24 @@ const initialState = {
 const task = (state = initialState, action) => {
     switch (action.type) {
 
+        case 'GET_TASKS' :
+            return {
+                ...state,
+                tasks: action.payload
+            }
+
         case 'TASK_CREATE':
             return {
                 ...state,
-                tasks: [...state.tasks, {
-                    id: uuid(),
-                    title: action.payload.newTask,
-                    priority: action.payload.priority,
-                    state: 'To Do'
-                }]
+                tasks: [...state.tasks, ...action.payload]
             };
 
         case 'TASK_DELETE':
-            const tasksAfterDelete = state.tasks.filter(el => el.id !== action.payload);
+            //const tasksAfterDelete = state.tasks.filter(el => el.id !== action.payload);
 
             return {
                 ...state,
-                tasks: tasksAfterDelete
+                tasks: action.payload
             };
 
         case 'TASK_STATE_CHG':

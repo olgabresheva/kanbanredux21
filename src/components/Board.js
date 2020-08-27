@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
 import Task from './Task';
+import {getTasks, taskDelete} from '../redux/actions';
 
 function Board(props) {
+
+    useEffect(() => {props.getTasks()},[]);
 
     return (
         <span className="col-sm">
@@ -12,11 +15,11 @@ function Board(props) {
             </div>
             <p/>
 
-            {props.taskList.filter(el => el.state === props.boardStatus).map(el => <li key={el.id}>
-                <Task item={el.title}
+            {props.taskList.filter(el => el.status === props.boardStatus).map(el => <li key={el._id}>
+                <Task item={el.name}
                       priority={el.priority}
-                      state={el.state}
-                      id={el.id}
+                      state={el.status}
+                      id={el._id}
                       taskDelete={props.taskDelete}
                       taskStateChg={props.taskStateChg}
                       taskPriorityChg={props.taskPriorityChg}
@@ -32,10 +35,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    taskDelete: (id) => dispatch({type: 'TASK_DELETE', payload: id}),
+    taskDelete: (id) => dispatch(taskDelete(id)),
     taskStateChg: (id, direction) => dispatch({type: 'TASK_STATE_CHG', payload: {id, direction}}),
     taskPriorityChg: (id, direction) => dispatch({type: 'TASK_PRIORITY_CHG', payload: {id, direction}}),
-    taskSave: (id, newTitle) => dispatch({type: 'TASK_EDIT', payload: {id, newTitle}})
+    taskSave: (id, newTitle) => dispatch({type: 'TASK_EDIT', payload: {id, newTitle}}),
+    getTasks: () => dispatch(getTasks()),
 
 })
 

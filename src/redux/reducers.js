@@ -2,6 +2,7 @@
 const initialState = {
     tasks: [],
     boardStatus: ['To Do', 'In Progress', 'Review', 'Done'],
+    columns: [],
 };
 
 const task = (state = initialState, action) => {

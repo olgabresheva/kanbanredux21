@@ -8,8 +8,7 @@ function Board(props) {
 
     useEffect(() => {
         props.getTasks()
-    },[]);
-
+    }, []);
 
     return (
         <span className="col-sm">
@@ -23,17 +22,18 @@ function Board(props) {
                     return a.priority - b.priority
                 })
                 .map(el => <li key={el._id}>
-                <Task name={el.name}
-                      description={el.description}
-                      priority={el.priority}
-                      state={el.status}
-                      id={el._id}
-                      boardState={props.boardState}
-                      taskDelete={props.taskDelete}
-                      taskStateChg={props.taskStateChg}
-                      taskPriorityChg={props.taskPriorityChg}
-                      taskEdit={props.taskEdit}/>
-            </li>)}
+                    <Task name={el.name}
+                          description={el.description}
+                          priority={el.priority}
+                          state={el.status}
+                          id={el._id}
+                          boardState={props.boardState}
+                          taskDelete={props.taskDelete}
+                          taskStateChg={props.taskStateChg}
+                          taskPriorityChg={props.taskPriorityChg}
+                          taskEdit={props.taskEdit}
+                    />
+                </li>)}
         </span>
 
     );

@@ -14,6 +14,8 @@ function TaskCreateForm(props) {
     const [priority, setPriority] = useState('Select Priority');
     const [addBtnDisabled, setAddBtnDisabled] = useState(true);
     const [formOpen, setFormOpen] = useState(false);
+    //const [openColumnform, setOpenColumnform] = useState(false);
+    const [columnName, setColumnName] = useState('');
 
 
     const taskPriorityInput = (e) => {
@@ -22,7 +24,6 @@ function TaskCreateForm(props) {
             setAddBtnDisabled(false)
         } else setAddBtnDisabled(true);
     }
-
 
     const taskCreate = (e) => {
         e.preventDefault();
@@ -41,12 +42,21 @@ function TaskCreateForm(props) {
         setFormOpen(false);
     }
 
+    const createNewColumn = (e) => {
+        e.preventDefault();
+        props.onColumnCreate(columnName);
+
+    }
 
     return (
         <div className="TaskCreateForm">
 
             <button type="submit" className="btn btn-info create" onClick={() => setFormOpen(true)}>Create New Task
             </button>
+            <button>Add Column</button>
+            <input type="text" value={columnName} onChange={e => setColumnName(e.target.value)}/>
+            <button onClick={createNewColumn}>Create</button>
+
             <p/>
 
             {formOpen &&
@@ -88,7 +98,8 @@ function TaskCreateForm(props) {
 const mapDispatchToProps = dispatch => ({
     //onTaskCreate : (newTask, priority) => dispatch ({type: 'TASK_CREATE', payload: {newTask, priority}})
     getTasks: () => dispatch(getTasks()),
-    onTaskCreate: (taskName, taskDescription, priority) => dispatch(onTaskCreate(taskName, taskDescription, priority))
+    onTaskCreate: (taskName, taskDescription, priority) => dispatch(onTaskCreate(taskName, taskDescription, priority)),
+    onColumnCreate: (columnName) => dispatch({type: 'ADD_COLUMN', payload: columnName}),
 })
 
 export default connect(null, mapDispatchToProps)(TaskCreateForm);

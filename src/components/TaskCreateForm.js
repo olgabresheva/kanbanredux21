@@ -42,8 +42,8 @@ function TaskCreateForm(props) {
         setFormOpen(false);
     }
 
-    const createNewColumn = (e) => {
-        e.preventDefault();
+    const createNewColumn = () => {
+        //e.preventDefault();
         props.onColumnCreate(columnName);
 
     }

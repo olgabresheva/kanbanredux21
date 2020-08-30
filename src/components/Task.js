@@ -149,9 +149,9 @@ function Task(props) {
                     </>
                     }
                     <span className="float-right">
-                {(props.state !== 'To Do' && props.state !== 'Done') &&
+                {(props.state !== 'To Do') &&
                 <span onClick={() => onStateChg(props.id, "left")}>{leftBtn}</span>}
-                        {props.state !== 'Done' &&
+                        {props.state !== props.state[props.state.length] &&
                         <span onClick={() => onStateChg(props.id, "right")}>{rightBtn}</span>}
                 </span>
                 </div>

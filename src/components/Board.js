@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
 import Task from './Task';
 import {getTasks, taskDelete, taskEdit, taskPriorityChg, taskStateChg, colDelete} from '../redux/actions';
+import Alert from 'react-bootstrap/Modal';
 
 const deleteBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
@@ -14,9 +15,17 @@ const deleteBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="
 
 function Board(props) {
 
+    const [showAlert, setShowAlert] = useState(false);
+
     useEffect(() => {
         props.getTasks()
     }, []);
+
+    const onColDelete = () => {
+        props.taskList.map(el => {
+            el.status === props.columnStatus ? setShowAlert(true) : props.colDelete(props.colId);
+        })
+    }
 
     return (
         <span className="col-sm">
@@ -24,10 +33,10 @@ function Board(props) {
                 {props.columnStatus}
                 <span className="float-right">
                 {(props.columnStatus !== "To Do"
-                 && props.columnStatus !== "In Progress"
-                 && props.columnStatus !== "Review"
-                 && props.columnStatus !== "Done")
-                 && <span onClick={() => props.colDelete(props.colId)}>{deleteBtn}</span>}
+                    && props.columnStatus !== "In Progress"
+                    && props.columnStatus !== "Review"
+                    && props.columnStatus !== "Done")
+                && <span onClick={onColDelete}>{deleteBtn}</span>}
                 </span>
             </div>
 
@@ -43,6 +52,7 @@ function Board(props) {
                           taskPriority={el.priority}
                           taskStatus={el.status}
                           taskId={el._id}
+                          boardList={props.boardState}
                           boardState={props.boardState}
                           taskDelete={props.taskDelete}
                           taskStateChg={props.taskStateChg}
@@ -50,6 +60,14 @@ function Board(props) {
                           taskEdit={props.taskEdit}
                     />
                 </li>)}
+
+            {showAlert &&
+            <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+                {/*<Alert.Heading>Oh snap! You got an error!</Alert.Heading>*/}
+                <p>
+                    Please make sure there are no tasks associated with column you wish to delete.
+                </p>
+            </Alert>}
         </span>
     );
 }

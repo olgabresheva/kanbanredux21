@@ -152,7 +152,7 @@ function Task(props) {
                     <span className="float-right">
                 {(props.taskStatus !== 'To Do') &&
                 <span onClick={() => onStateChg(props.taskId, "left")}>{leftBtn}</span>}
-                        {props.taskStatus !== props.taskStatus[props.taskStatus.length] &&
+                        {props.taskStatus !== props.boardList[props.boardList.length -1].title &&
                         <span onClick={() => onStateChg(props.taskId, "right")}>{rightBtn}</span>}
                 </span>
                 </div>

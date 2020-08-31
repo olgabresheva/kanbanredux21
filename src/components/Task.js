@@ -54,32 +54,33 @@ const editBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="bi
 function Task(props) {
 
     const [editMode, setEditMode] = useState(false);
-    const [taskNewName, setTaskNewName] = useState(props.name);
-    const [taskNewDescr, setTaskNewDescr] = useState(props.description);
+    const [taskNewName, setTaskNewName] = useState(props.taskName);
+    const [taskNewDescr, setTaskNewDescr] = useState(props.taskDescription);
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
-        props.taskDelete(props.id);
+        props.taskDelete(props.taskId);
         setShow(false);
     }
 
     const onTaskSave = () => {
-        props.taskEdit(props.id, taskNewName, taskNewDescr);
+        props.taskEdit(props.taskId, taskNewName, taskNewDescr);
         setEditMode(false);
     }
 
     const onPriorityChg = (id, direction) => {
         let p;
-        direction === 'up' ? p = props.priority - 1 : p = props.priority + 1
+        direction === 'up' ? p = props.taskPriority - 1 : p = props.taskPriority + 1
         props.taskPriorityChg(id, p)
     }
 
     const onStateChg = (id, direction) => {
-        let state;
-        if (direction === 'right') {
-            state = props.boardState[props.boardState.indexOf(props.state) + 1]
-        } else state = props.boardState[props.boardState.indexOf(props.state) - 1]
-        props.taskStateChg(id, state)
+        let status;
+        let i;
+        i = props.boardState.findIndex(e => e.title === props.taskStatus);
+        console.log(props.taskStatus)
+        direction === 'right' ? status = props.boardState[i + 1].title : status = props.boardState[i - 1].title
+        props.taskStateChg(id, status)
     }
 
     const priorityBadge = {
@@ -93,21 +94,21 @@ function Task(props) {
             <div className="card">
                 <div className="card-header">
                 <span className="priority">
-                    {props.priority < 3 &&
-                    <span onClick={() => onPriorityChg(props.id, 'down')}>{downBtn}</span>}
-                    {props.priority > 1 &&
-                    <span onClick={() => onPriorityChg(props.id, 'up')}>{upBtn}</span>}
+                    {props.taskPriority < 3 &&
+                    <span onClick={() => onPriorityChg(props.taskId, 'down')}>{downBtn}</span>}
+                    {props.taskPriority > 1 &&
+                    <span onClick={() => onPriorityChg(props.taskId, 'up')}>{upBtn}</span>}
                 </span>
-                    <span className={priorityBadge[props.priority]}>Priority: {props.priority}</span>
+                    <span className={priorityBadge[props.taskPriority]}>Priority: {props.taskPriority}</span>
 
                 </div>
                 <div className="card-body">
-                    <h6 className="card-title">{props.name}:</h6>
+                    <h6 className="card-title">{props.taskName}:</h6>
                     <ShowMoreText className="card-title small"
                                   lines={1}
                                   more='Show more'
                                   less='Show less'>
-                        {props.description}</ShowMoreText>
+                        {props.taskDescription}</ShowMoreText>
 
                 </div>
                 <div className="card-footer bg-transparent text-muted border-0">
@@ -149,10 +150,10 @@ function Task(props) {
                     </>
                     }
                     <span className="float-right">
-                {(props.state !== 'To Do') &&
-                <span onClick={() => onStateChg(props.id, "left")}>{leftBtn}</span>}
-                        {props.state !== props.state[props.state.length] &&
-                        <span onClick={() => onStateChg(props.id, "right")}>{rightBtn}</span>}
+                {(props.taskStatus !== 'To Do') &&
+                <span onClick={() => onStateChg(props.taskId, "left")}>{leftBtn}</span>}
+                        {props.taskStatus !== props.taskStatus[props.taskStatus.length] &&
+                        <span onClick={() => onStateChg(props.taskId, "right")}>{rightBtn}</span>}
                 </span>
                 </div>
             </div>

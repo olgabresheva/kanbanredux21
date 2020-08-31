@@ -1,6 +1,7 @@
 const initialState = {
     tasks: [],
-    boardStatus: ['To Do', 'In Progress', 'Review', 'Done'],
+    //boardStatus: ['To Do', 'In Progress', 'Review', 'Done'],
+    boardStatus: [],
     columns: [],
 };
 
@@ -32,12 +33,12 @@ const task = (state = initialState, action) => {
                 tasks: [...state.tasks, action.payload]
             }
 
-        case 'ADD_COLUMN':
+        case 'GET_COLUMNS':
             // const updatedBoardStatus = [...state.boardStatus];
             // updatedBoardStatus.push(action.payload);
             return {
                 ...state,
-                boardStatus: [...state.boardStatus, action.payload]
+                boardStatus: action.payload
             }
 
         default:

@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../App.css';
 import TaskCreateForm from "./TaskCreateForm";
 import Board from "./Board";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {connect} from 'react-redux';
+import {getColumns} from "../redux/actions";
+
 
 function App(props) {
 
+    useEffect(() => {
+        props.getColumns()
+    },[])
 
     return (
         <div className="App">
@@ -17,9 +22,10 @@ function App(props) {
                 <hr/>
 
                 <div className="row">
-                    {props.boardStatus.map((el, index) => <Board
-                        key={index}
-                        boardStatus={el}
+                    {props.columnStatus.map(el => <Board
+                        key={el._id}
+                        colId={el._id}
+                        columnStatus={el.title}
                     />)}
                 </div>
             </div>
@@ -28,7 +34,11 @@ function App(props) {
 }
 
 const mapStateToProps = state => ({
-    boardStatus: state.boardStatus,
+    columnStatus: state.boardStatus,
 })
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = (dispatch) => ({
+    getColumns: () => dispatch(getColumns()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

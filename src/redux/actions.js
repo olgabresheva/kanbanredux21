@@ -80,15 +80,64 @@ export function taskPriorityChg(id, priority) {
     }
 }
 
-export function taskStateChg(id, state) {
+export function taskStateChg(id, status) {
     return (dispatch) => {
         axios({
             url: `https://kanban-app-trial.herokuapp.com/card/${id}`,
             method: 'PATCH',
-            data: {status: state}
+            data: {status: status}
         })
             .then(res => {
                 dispatch(getTasks())
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+}
+
+export function getColumns() {
+    return (dispatch) => {
+        axios({
+            url: "https://kanban-app-trial.herokuapp.com/column",
+            method: 'GET'
+        })
+            .then(response => {
+                dispatch({
+                    type: "GET_COLUMNS",
+                    payload: response.data
+                })
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+}
+
+export function onColumnCreate(colTitle, colStatus) {
+    return (dispatch) => {
+        axios({
+            url: "https://kanban-app-trial.herokuapp.com/column",
+            method: 'POST',
+            data: {title: colTitle, status: colStatus}
+        })
+            .then(res => {
+                dispatch(getColumns())
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+}
+
+export function colDelete(id) {
+    return (dispatch) => {
+        axios({
+            url: `https://kanban-app-trial.herokuapp.com/column/${id}`,
+            method: 'DELETE'
+        })
+            .then(res => {
+                dispatch(getColumns())
             })
             .catch(function (error) {
                 console.log(error)

@@ -22,7 +22,13 @@ function Board(props) {
         <span className="col-sm">
             <div className="card-header">
                 {props.columnStatus}
-                <span onClick={() => props.colDelete(props.colId)}>{deleteBtn}</span>
+                <span className="float-right">
+                {(props.columnStatus !== "To Do"
+                 && props.columnStatus !== "In Progress"
+                 && props.columnStatus !== "Review"
+                 && props.columnStatus !== "Done")
+                 && <span onClick={() => props.colDelete(props.colId)}>{deleteBtn}</span>}
+                </span>
             </div>
 
             <p/>

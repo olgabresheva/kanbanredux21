@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "78b0b27ed305a1a840fa9e3c05d449e8",
+    "revision": "fbcfcb1e55ce6fec9cab0aa64cb09b95",
     "url": "/kanbanredux21/index.html"
   },
   {
-    "revision": "1bc8ef084bf691a84154",
+    "revision": "d54e655ec8959007094d",
     "url": "/kanbanredux21/static/css/2.11829350.chunk.css"
   },
   {
-    "revision": "1ccab2bcdbaba1f6234a",
+    "revision": "7d00a739f070f488ed81",
     "url": "/kanbanredux21/static/css/main.bc568982.chunk.css"
   },
   {
-    "revision": "1bc8ef084bf691a84154",
-    "url": "/kanbanredux21/static/js/2.823cc257.chunk.js"
+    "revision": "d54e655ec8959007094d",
+    "url": "/kanbanredux21/static/js/2.ac312da6.chunk.js"
   },
   {
     "revision": "3453b8997016469371284a28c0e873e2",
-    "url": "/kanbanredux21/static/js/2.823cc257.chunk.js.LICENSE.txt"
+    "url": "/kanbanredux21/static/js/2.ac312da6.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1ccab2bcdbaba1f6234a",
-    "url": "/kanbanredux21/static/js/main.52e67470.chunk.js"
+    "revision": "7d00a739f070f488ed81",
+    "url": "/kanbanredux21/static/js/main.ff369e34.chunk.js"
   },
   {
     "revision": "e18d9ca2883f6a622e1d",

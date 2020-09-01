@@ -3,8 +3,6 @@ import '../App.css';
 import {connect} from 'react-redux';
 import Task from './Task';
 import {getTasks, taskDelete, taskEdit, taskPriorityChg, taskStateChg, colDelete} from '../redux/actions';
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 
 const deleteBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-trash" fill="currentColor"
@@ -54,15 +52,6 @@ function Board(props) {
                         Please make sure there are no tasks associated with column you wish to delete.
                     </p>
                 </Alert>
-
-                {/*<Modal.Dialog>*/}
-                {/*    <Modal.Body>*/}
-                {/*        <p>Please make sure there are no tasks associated with column you wish to delete.</p>*/}
-                {/*    </Modal.Body>*/}
-                {/*    <Modal.Footer>*/}
-                {/*        <Button variant="primary" onClick={() => setShow(false)}>OK</Button>*/}
-                {/*    </Modal.Footer>*/}
-                {/*</Modal.Dialog>*/}
             </>}
 
             {props.taskList.filter(el => el.status === props.columnStatus)

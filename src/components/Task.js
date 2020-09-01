@@ -78,7 +78,6 @@ function Task(props) {
         let status;
         let i;
         i = props.boardState.findIndex(e => e.title === props.taskStatus);
-        console.log(props.taskStatus)
         direction === 'right' ? status = props.boardState[i + 1].title : status = props.boardState[i - 1].title
         props.taskStateChg(id, status)
     }

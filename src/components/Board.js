@@ -3,7 +3,6 @@ import '../App.css';
 import {connect} from 'react-redux';
 import Task from './Task';
 import {getTasks, taskDelete, taskEdit, taskPriorityChg, taskStateChg, colDelete} from '../redux/actions';
-import Alert from 'react-bootstrap/Alert'
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
@@ -17,31 +16,20 @@ const deleteBtn = (<svg width="1em" height="1em" viewBox="0 0 16 16" className="
 
 function Board(props) {
 
-    const [showAlert, setShowAlert] = useState(false);
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         props.getTasks()
     }, []);
 
     const onColDelete = (colStatus, id) => {
-        props.colDelete(id)
+        for (let i = 0; i <= props.taskList.length - 1; i++) {
+            if (props.taskList[i].status === colStatus) {
+                return setShow(true);
+            }
         }
-
-    // const onColDelete = (colStatus, id) => {
-    //     console.log(colStatus)
-    //     for (let i = 0; i <= props.taskList.length - 1; i++) {
-    //         jumpIf: if (props.taskList[i].status === colStatus) {
-    //             setShowAlert(true)
-    //             break jumpIf;
-    //         } else props.colDelete(id)
-    //     }
-        // props.taskList.map(el => {
-        //     if (el.status === colStatus) {
-        //         return setShowAlert(true)
-        //     } else props.colDelete(id)
-        //     // (el.status === colStatus) ? setShowAlert(true) : props.colDelete(id);
-        // })
-    //}
+        props.colDelete(id);
+    }
 
     return (
         <span className="col-sm">
@@ -57,6 +45,18 @@ function Board(props) {
             </div>
 
             <p/>
+
+            {show &&
+            <>
+                <Modal.Dialog>
+                    <Modal.Body>
+                        <p>Please make sure there are no tasks associated with column you wish to delete.</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={() => setShow(false)}>OK</Button>
+                    </Modal.Footer>
+                </Modal.Dialog>
+            </>}
 
             {props.taskList.filter(el => el.status === props.columnStatus)
                 .sort(function (a, b) {
@@ -76,19 +76,6 @@ function Board(props) {
                           taskEdit={props.taskEdit}
                     />
                 </li>)}
-
-            {showAlert &&
-            <Modal.Dialog>
-                <Modal.Body>
-                    <p>
-                        Please make sure there are no tasks associated with column you wish to delete.
-                    </p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary">Close</Button>
-                    <Button variant="primary">Save changes</Button>
-                </Modal.Footer>
-            </Modal.Dialog>}
         </span>
     );
 }

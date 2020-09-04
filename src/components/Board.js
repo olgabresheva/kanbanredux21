@@ -45,6 +45,7 @@ function Board(props) {
 
             <p/>
 
+            //added check for the tasks in column to be deleted
             {show &&
             <>
                 <Alert variant="danger" onClose={() => setShow(false)} dismissible>

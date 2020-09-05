@@ -31,6 +31,7 @@ function Board(props) {
     }
 
     return (
+        //column delete except default range of columns
         <span className="col-sm">
             <div className="card-header">
                 {props.columnStatus}
